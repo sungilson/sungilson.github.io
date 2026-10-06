@@ -1,0 +1,271 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>Sungil Son</title>
+
+    <meta name="author" content="Sungil Son">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
+  </head>
+
+  <body>
+    <table style="width:100%;max-width:800px;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+      <tr style="padding:0px">
+        <td style="padding:0px">
+          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+            <tr style="padding:0px">
+              <td style="padding:2.5%;width:63%;vertical-align:middle">
+                <p class="name" style="text-align: center;">
+                  Sungil Son
+                </p>
+                <p>
+                  I'm a PhD student in the <a href="https://gsai.snu.ac.kr/en/#none">Interdisciplinary Program in Artificial Intelligence</a> at Seoul National University, working at <a href="https://larr.snu.ac.kr/">Lab for Autonomous Robotics Research (LARR)</a> under the guidance of Prof. <a href="https://scholar.google.co.kr/citations?user=TLQUwIMAAAAJ&amp;hl=en">H. Jin Kim</a>.
+                </p>
+                <p style="text-align:center">
+                  <a href="mailto:aldridge99@snu.ac.kr">Email</a> &nbsp;/&nbsp;
+                  <a href="https://github.com/One-star11">Github</a>
+                </p>
+              </td>
+              <td style="padding:2.5%;width:37%;max-width:37%">
+                <img class="portrait" src="images/sungilson-portrait.jpg" alt="Sungil Son">
+              </td>
+            </tr>
+          </tbody></table>
+
+          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+            <tbody>
+              <tr>
+                <td style="padding:16px;width:100%;vertical-align:middle">
+                  <h2>News</h2>
+                  <ul>
+                    <li><b>[Sep 2026]</b> EFXPLORER was accepted to <i>NeurIPS 2026</i>.</li>
+                    <li><b>[Feb 2026]</b> TART was accepted to <i>ICRA 2026</i>.</li>
+                    <li><b>[Mar 2025]</b> I joined Lab for Autonomous Robotics Research (<a href="https://larr.snu.ac.kr/">LARR</a>)!</li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+            <tr>
+              <td style="padding:16px;width:100%;vertical-align:middle">
+                <h2>Publications</h2>
+              </td>
+            </tr>
+          </tbody></table>
+          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+            <tr onmouseout="EFXPLORER_stop()" onmouseover="EFXPLORER_start()">
+              <td style="padding:16px;width:20%;vertical-align:middle">
+                <div class="one">
+                  <div class="two" id="EFXPLORER_image">
+                    <img src="images/EFXPLORER_after.jpg" width="160" alt="EFXPLORER method: constrained exploration and successor-distance novelty.">
+                  </div>
+                  <img src="images/EFXPLORER_before.jpg" width="160" alt="EFXPLORER motivation: linear reward mixing collapses coordination.">
+                </div>
+                <script type="text/javascript">
+                  function EFXPLORER_start() {
+                    document.getElementById('EFXPLORER_image').style.opacity = "1";
+                  }
+                  function EFXPLORER_stop() {
+                    document.getElementById('EFXPLORER_image').style.opacity = "0";
+                  }
+                  EFXPLORER_stop()
+                </script>
+              </td>
+              <td style="padding:8px;width:80%;vertical-align:middle">
+                <span class="papertitle">Cooperative Multi-Agent Reinforcement Learning via Epigraph-Form Guided Exploration</span>
+                <br>
+                <strong>Sungil Son</strong><sup>*</sup>,
+                <a href="https://junghoseong.github.io/">Hoseong Jung</a><sup>*</sup>,
+                Dahyun Oh<sup>*</sup>,
+                <a href="https://scholar.google.co.kr/citations?user=TLQUwIMAAAAJ&amp;hl=en">H. Jin Kim</a>
+                <br>
+                <em>Seoul National University</em>
+                <br>
+                *Equal contribution
+                <br>
+                <div><em>NeurIPS</em>, 2026</div>
+                <br>
+                <a href="https://junghoseong.github.io/EFXPLORER/">project page</a>
+                <p></p>
+                <p>
+                  In this paper, we propose <i>EFXPLORER</i>, a constrained exploration framework that maximizes exploration objectives subject to a constraint that preserves established task performance.
+                </p>
+              </td>
+            </tr>
+
+            <tr onmouseout="TART_stop()" onmouseover="TART_start()">
+              <td style="padding:16px;width:20%;vertical-align:middle">
+                <div class="one">
+                  <div class="two" id="TART_image">
+                    <img src="images/TART_after.png" width="160" alt="TART generates diverse subsequent maneuvers from a tactic codebook.">
+                  </div>
+                  <img src="images/TART_before.png" width="160" alt="TART learns temporal action representations for hybrid tactical control.">
+                </div>
+                <script type="text/javascript">
+                  function TART_start() {
+                    document.getElementById('TART_image').style.opacity = "1";
+                  }
+                  function TART_stop() {
+                    document.getElementById('TART_image').style.opacity = "0";
+                  }
+                  TART_stop()
+                </script>
+              </td>
+              <td style="padding:8px;width:80%;vertical-align:middle">
+                <span class="papertitle">Temporal Action Representation Learning for Tactical Resource Control and Subsequent Maneuver Generation</span>
+                <br>
+                <a href="https://junghoseong.github.io/">Hoseong Jung</a>,
+                <strong>Sungil Son</strong>,
+                <a href="https://dscho1234.github.io/">Daesol Cho</a>,
+                <a href="https://jonghaepark.github.io/">Jonghae Park</a>,
+                <a href="https://changhyunchoi.com/">Changhyun Choi</a>,
+                <a href="https://scholar.google.co.kr/citations?user=TLQUwIMAAAAJ&amp;hl=en">H. Jin Kim</a>
+                <br>
+                <div><em>IEEE International Conference on Robotics and Automation (ICRA)</em>, 2026</div>
+                <div><em>RSS workshop on Leveraging Implicit Methods for Aerial Autonomy</em>, 2025</div>
+                <br>
+                <a href="https://arxiv.org/abs/2602.18716">paper</a> &nbsp;/&nbsp;
+                <a href="https://junghoseong.github.io/TART/">project page</a>
+                <p></p>
+                <p>
+                  In this paper, we introduce a temporal action contrastive learning approach that facilitates semantic alignment between resource control and tactical maneuvers.
+                </p>
+              </td>
+            </tr>
+          </tbody></table>
+
+          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+            <tbody>
+              <tr>
+                <td style="padding:16px;width:100%;vertical-align:middle">
+                  <h2>Projects</h2>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+            <tr>
+              <td style="padding:16px;width:20%;vertical-align:middle">
+                <div class="one">
+                  <img class="project-photo" src="images/vtol_thumbnail.png" width="160" alt="AAM Tech Challenge">
+                </div>
+              </td>
+              <td style="padding:8px;width:80%;vertical-align:middle">
+                <table class="edu">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <span class="papertitle">AAM Tech Challenge</span><br>
+                        The 22nd Korea Robot Aircraft Competition
+                      </td>
+                      <td class="date end" style="vertical-align: bottom;">Feb 2024 - Oct. 2024</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br>
+                <a href="https://youtu.be/Eh4YpA9WtCg?si=XsBbubaRTfcJlhDc">video</a> &nbsp;/&nbsp;
+                <a href="images/2024_report_korean.pdf">report (Korean)</a> &nbsp;/&nbsp;
+                <a href="images/VTOL_2024.pdf">report (English)</a>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:16px;width:20%;vertical-align:middle">
+                <div class="one">
+                  <img class="project-photo" src="images/2023drone.jpg" width="160" alt="UAM Drone Delivery">
+                </div>
+              </td>
+              <td style="padding:8px;width:80%;vertical-align:middle">
+                <table class="edu">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <span class="papertitle">UAM Drone Delivery</span><br>
+                        The 21st Korea Robot Aircraft Competition
+                      </td>
+                      <td class="date end" style="vertical-align: bottom;">Feb 2023 - Aug 2023</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br>
+                <a href="projects/uam-drone-delivery.mp4">video</a> &nbsp;/&nbsp;
+                <a href="images/2023_report_korean.pdf">report (Korean)</a>
+              </td>
+            </tr>
+          </tbody></table>
+
+          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+            <tbody>
+              <tr>
+                <td style="padding:16px;width:100%;vertical-align:middle">
+                  <h2>Awards</h2>
+                  <table class="edu">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <strong>Grand Prize (Minister of Trade, Industry and Energy Award)</strong><br>
+                          The 22nd Korea Robot Aircraft Competition (AAM Tech Challenge)
+                        </td>
+                        <td class="date end" style="vertical-align: bottom;">October, 2024</td>
+                      </tr>
+                      <tr>
+                        <td style="padding-top: 12px;">
+                          <strong>Semifinals</strong><br>
+                          The 21st Korea Robot Aircraft Competition (UAM Drone Delivery)
+                        </td>
+                        <td class="date end" style="vertical-align: bottom; padding-top: 12px;">August, 2023</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+            <tbody>
+              <tr>
+                <td style="padding:16px;width:100%;vertical-align:middle">
+                  <h2>Education</h2>
+                  <table class="edu">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <strong>Seoul National University</strong><br>
+                          B.S. in Aerospace Engineering &amp; Intelligent Communication
+                        </td>
+                        <td class="date end" style="vertical-align: bottom;">Mar.2018 - Feb.2025</td>
+                      </tr>
+                      <tr>
+                        <td style="padding-top: 12px;">
+                          <strong>Seoul National University</strong><br>
+                          Ph.D. student in <a href="https://gsai.snu.ac.kr/en/#none">Interdisciplinary Program in Artificial Intelligence</a>
+                        </td>
+                        <td class="date end" style="vertical-align: bottom; padding-top: 12px;">Mar.2025 -</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+            <tr>
+              <td style="padding:0px">
+                <br>
+                <p style="text-align:right;font-size:small;">
+                  Template from <a href="https://github.com/jonbarron/jonbarron_website">Jon Barron</a>.
+                </p>
+              </td>
+            </tr>
+          </tbody></table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
