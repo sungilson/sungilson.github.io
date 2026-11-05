@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="EFXPLORER: Cooperative Multi-Agent Reinforcement Learning via Epigraph-Form Guided Exploration (NeurIPS 2026)">
+  <meta name="keywords" content="multi-agent reinforcement learning, exploration, intrinsic reward, epigraph form, constrained optimization, successor distance, MAPPO, SMAX, VMAS, MPE">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EFXPLORER: Cooperative Multi-Agent Reinforcement Learning via Epigraph-Form Guided Exploration</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="./static/css/index.css?v=4">
+  <link rel="icon" type="image/svg+xml" href="./static/images/favicon.svg">
+
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script defer src="./static/js/index.js?v=4"></script>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://junghoseong.github.io/" target="_blank" rel="noopener noreferrer">
+        <span class="icon"><i class="fas fa-home"></i></span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Cooperative Multi-Agent Reinforcement Learning via Epigraph-Form Guided Exploration</h1>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=xR6tLVIAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Sungil Son</a><sup>*</sup></span>&emsp;
+            <span class="author-block">
+              <a href="https://junghoseong.github.io/" target="_blank" rel="noopener noreferrer">Hoseong Jung</a><sup>*</sup></span>&emsp;
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=FoBrzl0AAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Dahyun Oh</a><sup>*</sup></span>&emsp;
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=TLQUwIMAAAAJ&hl=en&oi=ao" target="_blank" rel="noopener noreferrer">H. Jin Kim</a><sup>&dagger;</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors publication-affiliations">
+            <span class="author-block">Seoul National University</span>
+          </div>
+          <div class="is-size-6 publication-authors publication-affiliations" style="margin-top: 0.25rem;">
+            <span class="author-block"><sup>*</sup>Equal contribution &emsp; <sup>&dagger;</sup>Corresponding author</span>
+          </div>
+
+          <div class="publication-venue-badge">NeurIPS 2026</div>
+
+          <div class="publication-links">
+            <button class="button is-dark is-rounded" type="button" disabled title="The paper will be linked here once it is public.">
+              <span class="icon"><i class="fas fa-file-pdf"></i></span>
+              <span>Paper</span>
+            </button>
+            <button class="button is-dark is-rounded" type="button" disabled title="Code will be released soon.">
+              <span class="icon"><i class="fab fa-github"></i></span>
+              <span>Code</span>
+            </button>
+            <a class="button is-dark is-rounded" href="#bibtex">
+              <span class="icon"><i class="fas fa-quote-right"></i></span>
+              <span>BibTeX</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser" id="demo">
+  <div class="container is-max-widescreen">
+    <div class="hero-body">
+      <h2 class="title is-4 has-text-centered" style="margin-bottom: 1rem;">Safeguarding Coordination During Exploration</h2>
+
+      <div class="demo-carousel" id="demo-carousel">
+        <div class="demo-slides">
+          <!-- Demo Slide 1: VMAS-balance -->
+          <div class="demo-block demo-slide is-active" data-demo-index="0">
+            <h3 class="demo-title title is-4">VMAS-balance: four agents carry a payload on a rod to the target</h3>
+            <p class="demo-credit">
+              Both policies receive the same successor-distance intrinsic reward. The only difference is how exploration is combined with the task objective.
+            </p>
+            <div class="compare-grid">
+              <div class="compare-card">
+                <span class="compare-label is-baseline">Linear reward mixing &nbsp;\(r = r^{\mathrm{ext}} + \lambda\, r^{\mathrm{int}}\)</span>
+                <video class="compare-media"
+                       src="./figures/coordination_collapse.mp4"
+                       poster="./static/images/poster_collapse.jpg"
+                       autoplay muted playsinline controls preload="metadata">
+                  Your browser does not support the video tag.
+                </video>
+                <p class="compare-caption">
+                  <strong>Coordination collapse.</strong> The intrinsic bonus distorts the objective. Agents chase novelty, the rod tilts, and the payload is dropped.
+                </p>
+              </div>
+              <div class="compare-card">
+                <span class="compare-label is-ours">EFXPLORER &nbsp;\(\min\{ A^{\mathrm{ext}},\, V^{\mathrm{int}} - z \}\)</span>
+                <video class="compare-media"
+                       src="./figures/emerge_coordination_efxplorer.mp4"
+                       poster="./static/images/poster_efxplorer.jpg"
+                       autoplay muted playsinline controls preload="metadata">
+                  Your browser does not support the video tag.
+                </video>
+                <p class="compare-caption">
+                  <strong>Emergent coordination.</strong> Exploration is allowed only while the budget lasts and task progress is preserved, so the team explores briefly, then carries the payload to the target together.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Demo Slide 2: SMAX 5m_vs_6m -->
+          <div class="demo-block demo-slide" data-demo-index="1">
+            <h3 class="demo-title title is-4">SMAX <em>5m_vs_6m</em>: five allied marines (blue) vs. six enemy marines (green)</h3>
+            <p class="demo-credit">
+              Winning a numerically inferior fight requires a kiting maneuver and focus-fire coordination that plain reward maximization rarely discovers.
+            </p>
+            <div class="compare-grid">
+              <div class="compare-card">
+                <span class="compare-label is-baseline">MAPPO</span>
+                <video class="compare-media"
+                       src="./figures/MAPPO_dontexplore_smax.mp4"
+                       muted playsinline controls preload="metadata">
+                  Your browser does not support the video tag.
+                </video>
+                <p class="compare-caption">
+                  <strong>No exploration.</strong> The team engages head-on against a larger force and is eliminated within a few steps.
+                </p>
+              </div>
+              <div class="compare-card">
+                <span class="compare-label is-ours">EFXPLORER-MAPPO</span>
+                <video class="compare-media"
+                       src="./figures/EFXPLORER_explore_smax.mp4"
+                       muted playsinline controls preload="metadata">
+                  Your browser does not support the video tag.
+                </video>
+                <p class="compare-caption">
+                  <strong>Explored maneuver.</strong> The team pulls back to a corner, stretches the pursuing enemy into a line, and defeats them under local numerical advantage.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-nav">
+          <button class="demo-circle-btn" type="button" id="demo-prev" aria-label="Previous demonstration">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <div class="demo-dots" role="tablist" aria-label="Demonstration selector">
+            <button class="demo-dot is-active" type="button" data-demo="0" aria-label="VMAS-balance demo"></button>
+            <button class="demo-dot" type="button" data-demo="1" aria-label="SMAX 5m_vs_6m demo"></button>
+          </div>
+          <button class="demo-circle-btn" type="button" id="demo-next" aria-label="Next demonstration">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <h2 class="subtitle has-text-centered" style="font-size: 1.4rem; margin: 1.5rem auto 0; max-width: 1200px;">
+        <strong>TL;DR:</strong> <span class="method-name">EFXPLORER</span> discovers new cooperative strategies through exploration constrained to preserve team performance.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-3 has-text-centered" style="margin-bottom: 1rem;">Method</h2>
+
+    <div class="eq-block" style="margin-top: 0; margin-bottom: 1.75rem;">
+      <p class="eq-title">Epigraph-form constrained exploration</p>
+      <div class="is-hidden-mobile">
+      \[
+        \begin{aligned}
+          &\max_{\textcolor{#5b21b6}{z}}\; \textcolor{#5b21b6}{z} := \sum_{i\in\mathcal{N}} z^i \\[0.35em]
+          \text{s.t.}\quad
+          &\max_{\boldsymbol{\pi}}\;\min\Big\{\,
+            \textcolor{#b91c1c}{J_{\mathrm{ext}}(\boldsymbol{\pi}) - J_{\mathrm{ext}}(\hat{\boldsymbol{\pi}})}\,,\;
+            \textcolor{#1d4ed8}{J_{i,\mathrm{int}}(\pi^i) - z^i}
+          \Big\} \ge 0,\quad \forall i \in \mathcal{N}
+        \end{aligned}
+      \]
+      </div>
+      <div class="is-hidden-tablet">
+      \[
+        \begin{aligned}
+          &\max_{\textcolor{#5b21b6}{z}}\; \textcolor{#5b21b6}{z} := \sum_{i\in\mathcal{N}} z^i \\[0.35em]
+          \text{s.t.}\;\;
+          &\max_{\boldsymbol{\pi}}\;\min\Big\{\,
+            \textcolor{#b91c1c}{J_{\mathrm{ext}}(\boldsymbol{\pi}) - J_{\mathrm{ext}}(\hat{\boldsymbol{\pi}})}\,, \\[0.2em]
+          &\qquad\qquad\;\;
+            \textcolor{#1d4ed8}{J_{i,\mathrm{int}}(\pi^i) - z^i}
+          \Big\} \ge 0,\;\; \forall i \in \mathcal{N}
+        \end{aligned}
+      \]
+      </div>
+      <p class="eq-note">
+        The <span class="term-task">task-progress term</span> and the <span class="term-explore">intrinsic surplus over the budget \(z^i\)</span> are coupled by a single min operator: exploration counts only when the team is not losing task performance relative to the reference policy \(\hat{\boldsymbol{\pi}}\).
+      </p>
+    </div>
+
+    <div class="method-carousel slide-carousel" id="method-carousel">
+      <div class="method-figure">
+        <img src="./static/images/main_method.png?v=2" class="section-figure is-active" data-index="0"
+             alt="Overview of EFXPLORER: (a) conservative exploration framework with exploration budgets and an epigraph min objective; (b) successor distance-based intrinsic reward from factorized per-agent episodic novelty.">
+        <img src="./static/images/stepwise_epigraph_bottleneck.png?v=2" class="section-figure" data-index="1"
+             alt="EFXPLORER overview with the stepwise epigraph bottleneck highlighted.">
+        <img src="./static/images/adaptive_exploration_budgets.png?v=2" class="section-figure" data-index="2"
+             alt="EFXPLORER overview with the adaptive exploration budgets highlighted.">
+        <img src="./static/images/long_horizon_novelty.png?v=2" class="section-figure" data-index="3"
+             alt="EFXPLORER overview with the successor distance-based long-horizon novelty highlighted.">
+      </div>
+
+      <div class="slide-viewport">
+        <div class="slide-track">
+          <div class="contrib-card method-card">
+            <span class="contrib-icon"><i class="fas fa-layer-group"></i></span>
+            <h3>Overview</h3>
+            <p>
+              <span class="method-name">EFXPLORER</span> maximizes each agent's intrinsic return subject to a non-degradation constraint on the joint extrinsic return, rewrites the problem in epigraph form, and solves it by alternating between a policy update against a stepwise min-bottleneck and an outer update of the exploration budgets.
+            </p>
+          </div>
+          <div class="contrib-card method-card">
+            <span class="contrib-icon"><i class="fas fa-compress-alt"></i></span>
+            <h3>Stepwise epigraph bottleneck</h3>
+            <p>
+              The episode-level constraint is turned into a per-step signal by augmenting the state with the remaining budget. Each agent's update is driven by the smaller of the reference task advantage and its intrinsic surplus, which gives a conservative sufficient condition for feasibility and a standard likelihood-ratio policy gradient.
+            </p>
+            <div class="eq">\(\mathcal{B}^{\mathrm{epi}}_{i} = \min\{A^{\mathrm{ext}}_{\hat{\boldsymbol{\pi}}}(s_t,\mathbf{a}_t),\; S^{\mathrm{int}}_{i}(\tilde{s}^i_t,\mathbf{a}_t)\}\)</div>
+          </div>
+          <div class="contrib-card method-card">
+            <span class="contrib-icon"><i class="fas fa-battery-three-quarters"></i></span>
+            <h3>Adaptive exploration budgets</h3>
+            <p>
+              The outer loop grows the budgets \(z^i\) only from rollouts whose Monte Carlo task return beats a running reference. Among those feasible rollouts it picks the one with the largest collective intrinsic return and moves the budgets toward it with rate \(\alpha_z\). If nothing is feasible, the budgets stay put.
+            </p>
+            <div class="eq">\(z^{i,k+1}_0 \leftarrow \alpha_z\, \hat{z}^{\,i,k,m^\ast}_0 + (1-\alpha_z)\, z^{i,k}_0\)</div>
+          </div>
+          <div class="contrib-card method-card">
+            <span class="contrib-icon"><i class="fas fa-route"></i></span>
+            <h3>Long-horizon novelty via successor distance</h3>
+            <p>
+              Each agent learns a quasimetric successor distance on its own state space with a symmetric InfoNCE objective. The intrinsic reward is the minimum learned temporal distance to the states already visited in the episode, so agents are pushed toward temporally distant states rather than locally surprising ones.
+            </p>
+            <div class="eq">\(r^{\mathrm{int}}_{i,t}(s^i_t) = \min_{k \in [0,t)} d_{\phi_i}(s^i_k, s^i_t)\)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-nav">
+        <button class="demo-circle-btn" type="button" data-step="-1" aria-label="Previous method card">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="demo-dots">
+          <button class="demo-dot is-active" type="button" data-slide="0" aria-label="Overview"></button>
+          <button class="demo-dot" type="button" data-slide="1" aria-label="Stepwise epigraph bottleneck"></button>
+          <button class="demo-dot" type="button" data-slide="2" aria-label="Adaptive exploration budgets"></button>
+          <button class="demo-dot" type="button" data-slide="3" aria-label="Long-horizon novelty"></button>
+        </div>
+        <button class="demo-circle-btn" type="button" data-step="1" aria-label="Next method card">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">Results</h2>
+
+    <div class="result-carousel slide-carousel">
+      <div class="slide-viewport">
+        <div class="slide-track">
+          <div class="result-block">
+            <h3 class="result-title title is-4">Comparison to Cooperative MARL Baselines</h3>
+            <p class="result-text">
+              We evaluate on cooperative tasks from SMAX, VMAS, and MPE, including <em>MPE-corridor</em>, a new scenario that forces decentralized coordination in a narrow passage. All methods share the same backbone architecture and evaluation protocol. <span class="method-name">EFXPLORER</span> improves normalized returns on both centralized-training (MAPPO) and independent-learner (IPPO) backbones. Baselines that inject intrinsic signals through social influence, entropy regularization, or enforced diversity (COIN, HASAC, DiCO) let those signals dominate learning, which destabilizes teammates and can collapse coordination.
+            </p>
+            <img src="./static/images/result1.png" class="section-figure" style="max-width: 1000px;"
+                 alt="Normalized average return curves on VMAS-balance, VMAS-give way, VMAS-transport, VMAS-wheel, MPE-corridor, MPE-tag, SMAX-3s5z_vs_3s6z, and SMAX-5m_vs_6m for EFXPLORER-MAPPO, EFXPLORER-IPPO, MAPPO, IPPO, HASAC, COIN, and DiCO.">
+            <p class="figure-caption">
+              <strong>Performance comparison of <span class="method-name">EFXPLORER</span> with cooperative MARL baselines.</strong> Solid lines show the mean over 5 random seeds, while shaded regions correspond to the standard deviation.
+            </p>
+          </div>
+
+          <div class="result-block">
+            <h3 class="result-title title is-4">Epigraph Form vs. Linear Scalarization and Lagrangian Relaxation</h3>
+            <p class="result-text">
+              The same constrained objective can be attacked with a scalarized reward \(J_{\mathrm{ext}} + \beta \sum_i J_{i,\mathrm{int}}\) (MAPPO-Linear) or with a primal-dual multiplier (MAPPO-Lagrangian). Both are brittle: on <em>MPE-corridor</em>, \(\beta = 0.1\) explores well while \(0.02\) or \(1\) degrade performance, and the Lagrangian variant needs a heavily weighted initialization (\(\lambda_0 = 1\)) to avoid coordination collapse. <span class="method-name">EFXPLORER</span> stays competitive across all tasks with no such coefficient to tune.
+            </p>
+            <img src="./static/images/result2.png" class="section-figure" style="max-width: 1000px;"
+                 alt="Normalized average return on MPE-corridor, VMAS-balance, VMAS-give way, and SMAX-3s5z_vs_3s6z for EFXPLORER versus MAPPO-Linear with beta 0.02, 0.1, 1 and MAPPO-Lagrangian with lambda0 0.2 and 1.">
+            <p class="figure-caption">
+              <strong>Performance comparison with alternative optimization strategies.</strong> Solid lines show the mean across 5 random seeds; shaded regions indicate the standard deviation. <code>Linear(&beta;)</code> and <code>Lag(&lambda;<sub>0</sub>)</code> denote the scalarization weight and the multiplier initialization, respectively.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-nav">
+        <button class="demo-circle-btn" type="button" data-step="-1" aria-label="Previous result">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="demo-dots">
+          <button class="demo-dot is-active" type="button" data-slide="0" aria-label="Comparison to cooperative MARL baselines"></button>
+          <button class="demo-dot" type="button" data-slide="1" aria-label="Epigraph form vs. linear scalarization and Lagrangian relaxation"></button>
+        </div>
+        <button class="demo-circle-btn" type="button" data-step="1" aria-label="Next result">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-3 has-text-centered" style="margin-bottom: 0.5rem;">Benchmarks</h2>
+    <p class="section-lead" style="margin-bottom: 0;">
+      Tasks span continuous-control team sports from VMAS, particle-world coordination from MPE, and StarCraft micromanagement from SMAX, run through the JaxMARL and BenchMARL interfaces.
+    </p>
+    <div class="bench-grid">
+      <div class="bench-card">
+        <video src="./static/images/tasks/efx_balance.mp4?v=5" autoplay muted loop playsinline preload="metadata"></video>
+        <div class="bench-name">VMAS-balance</div>
+      </div>
+      <div class="bench-card">
+        <video src="./static/images/tasks/efx_give_way.mp4?v=8" autoplay muted loop playsinline preload="metadata"></video>
+        <div class="bench-name">VMAS-give way</div>
+      </div>
+      <div class="bench-card">
+        <video src="./static/images/tasks/efx_transport.mp4?v=7" autoplay muted loop playsinline preload="metadata"></video>
+        <div class="bench-name">VMAS-transport</div>
+      </div>
+      <div class="bench-card">
+        <video src="./static/images/tasks/efx_wheel.mp4?v=7" autoplay muted loop playsinline preload="metadata"></video>
+        <div class="bench-name">VMAS-wheel</div>
+      </div>
+      <div class="bench-card">
+        <video src="./static/images/tasks/efx_mpe_corridor.mp4?v=6" autoplay muted loop playsinline preload="metadata"></video>
+        <div class="bench-name">MPE-corridor (new)</div>
+      </div>
+      <div class="bench-card">
+        <video src="./static/images/tasks/efx_mpe_tag.mp4?v=6" autoplay muted loop playsinline preload="metadata"></video>
+        <div class="bench-name">MPE-tag</div>
+      </div>
+      <div class="bench-card">
+        <video src="./static/images/tasks/efx_smax_3s5z.mp4?v=9" autoplay muted loop playsinline preload="metadata"></video>
+        <div class="bench-name">SMAX 3s5z_vs_3s6z</div>
+      </div>
+      <div class="bench-card">
+        <video src="./static/images/tasks/efx_smax_5m.mp4?v=6" autoplay muted loop playsinline preload="metadata"></video>
+        <div class="bench-name">SMAX 5m_vs_6m</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container is-max-widescreen">
+    <div class="result-block">
+      <h3 class="result-title title is-4">Ablation Study</h3>
+      <div class="ablation-carousel" id="ablation-carousel">
+        <div class="ablation-nav-top">
+          <div class="ablation-tabs" role="tablist" aria-label="Ablation study selector">
+            <button class="ablation-tab is-active" type="button" role="tab" aria-selected="true" data-slide="0">
+              <span class="tab-num">1</span> Exploration Budget \(z\)
+            </button>
+            <button class="ablation-tab" type="button" role="tab" aria-selected="false" data-slide="1">
+              <span class="tab-num">2</span> State Factorization
+            </button>
+            <button class="ablation-tab" type="button" role="tab" aria-selected="false" data-slide="2">
+              <span class="tab-num">3</span> Intrinsic Reward Design
+            </button>
+            <button class="ablation-tab" type="button" role="tab" aria-selected="false" data-slide="3">
+              <span class="tab-num">4</span> Feasibility Set
+            </button>
+          </div>
+          <div class="ablation-arrows">
+            <button class="ablation-arrow" type="button" id="ablation-prev" aria-label="Previous ablation card">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <span class="ablation-counter" id="ablation-counter">1 / 4</span>
+            <button class="ablation-arrow" type="button" id="ablation-next" aria-label="Next ablation card">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="ablation-slides">
+          <div class="ablation-slide is-active" data-index="0">
+            <img src="./static/images/ablation_sub4.png" class="section-figure" style="max-width: 720px;"
+                 alt="Exploration budget ablation on MPE-corridor and VMAS-balance: adaptive budgets with different alpha_z versus fixed EF-z0 and EF-zmax.">
+            <p class="figure-caption" style="text-align: center; margin-top: 0.85rem;">
+              <strong>Exploration Budget \(z\).</strong> Adaptive budget (\(\alpha_z\)) matches exploration to task feasibility, whereas fixed <strong>EF-\(z_0\)</strong> suppresses exploration and <strong>EF-\(z_{\max}\)</strong> destabilizes coordination.
+            </p>
+          </div>
+
+          <div class="ablation-slide" data-index="1">
+            <img src="./static/images/ablation_sub1.png" class="section-figure" style="max-width: 420px;"
+                 alt="State factorization ablation on VMAS-balance comparing EFX-MA, EFX-MA-Joint, EFX-MA-Obs, EFX-I, EFX-I-Joint, and EFX-I-Obs.">
+            <p class="figure-caption" style="text-align: center; margin-top: 0.85rem;">
+              <strong>State Factorization.</strong> Agent-centric state novelty (<strong>EFX-MA / EFX-I</strong>) avoids the high-dimensionality of joint states (<strong>Joint</strong>) and teammate non-stationarity in raw observations (<strong>Obs</strong>).
+            </p>
+          </div>
+
+          <div class="ablation-slide" data-index="2">
+            <img src="./static/images/ablation_sub2.png" class="section-figure" style="max-width: 380px;"
+                 alt="Intrinsic reward design ablation on VMAS-balance comparing EFX-MA with successor distance against Pseudo-counts, Entropy, and Network distillation.">
+            <p class="figure-caption" style="text-align: center; margin-top: 0.85rem;">
+              <strong>Intrinsic Reward Design.</strong> Long-horizon successor distance (<strong>EFX-MA</strong>) outperforms short-term bonuses (<strong>Pseudo-counts</strong>, <strong>Entropy</strong>, <strong>Network distillation</strong>).
+            </p>
+          </div>
+
+          <div class="ablation-slide" data-index="3">
+            <img src="./static/images/ablation_sub3.png" class="section-figure" style="max-width: 380px;"
+                 alt="Feasibility set ablation on VMAS-balance comparing running reference EFX-MA and EFX-I against strict best-return EFX-MA-strict and EFX-I-strict.">
+            <p class="figure-caption" style="text-align: center; margin-top: 0.85rem;">
+              <strong>Feasibility Set.</strong> A running reference \(\bar{J}^{\mathrm{ext}}_k\) enables smooth budget growth, whereas a strict best-return threshold (<strong>strict</strong>) stalls exploration on noisy spikes.
+            </p>
+          </div>
+        </div>
+
+        <div class="ablation-dots" role="tablist" aria-label="Ablation slide dots">
+          <button class="ablation-dot is-active" type="button" data-slide="0" aria-label="Slide 1"></button>
+          <button class="ablation-dot" type="button" data-slide="1" aria-label="Slide 2"></button>
+          <button class="ablation-dot" type="button" data-slide="2" aria-label="Slide 3"></button>
+          <button class="ablation-dot" type="button" data-slide="3" aria-label="Slide 4"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="bibtex">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code></code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <p>
+        This page uses the <a href="https://github.com/nerfies/nerfies.github.io">Nerfies project page template</a>
+        and is licensed under a <a rel="license"
+        href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+      </p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
